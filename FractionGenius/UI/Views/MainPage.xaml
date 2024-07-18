@@ -18,16 +18,16 @@
             <StackPanel HorizontalAlignment="Center" 
             Width="200px" Margin="25px">
                 <Button Content="Сложение" 
-            Click="Button_Click"
+            Click="Button_Add_Click"
             Style="{StaticResource OriginalButtonStyle}"/>
                 <Button Content="Вычитание" 
-            Click="Button_Click"
+            Click="Button_Subtract_Click"
             Style="{StaticResource OriginalButtonStyle}"/>
                 <Button Content="Умножение" 
-            Click="Button_Click"
+            Click="Button_Multiply_Click"
             Style="{StaticResource OriginalButtonStyle}"/>
                 <Button Content="Деление" 
-            Click="Button_Click"
+            Click="Button_Divide_Click"
             Style="{StaticResource OriginalButtonStyle}"/>
             </StackPanel>
         </Grid>

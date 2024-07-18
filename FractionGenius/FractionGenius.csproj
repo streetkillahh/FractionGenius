@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <Folder Include="Infrascturcture\" />
+    <Folder Include="UI\Views\Generator\" />
   </ItemGroup>
 
 </Project>
