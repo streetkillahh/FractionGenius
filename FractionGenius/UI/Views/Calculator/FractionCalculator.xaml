@@ -1,0 +1,22 @@
+﻿<Page x:Class="FractionGenius.UI.Views.Calculator.FractionCalculator"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="clr-namespace:FractionGenius.UI.Views.Calculator"
+      Title="FractionCalculator">
+    <Grid>
+        <StackPanel>
+            <TextBox Text="{Binding Numerator1}" ToolTip="Числитель 1" />
+            <TextBox Text="{Binding Denominator1}" ToolTip="Знаменатель 1" />
+            <TextBox Text="{Binding Numerator2}" ToolTip="Числитель 2" />
+            <TextBox Text="{Binding Denominator2}" ToolTip="Знаменатель 2" />
+
+            <ComboBox ItemsSource="{Binding Operations}" 
+                      SelectedItem="{Binding SelectedOperation}" 
+                      Width="200" />
+
+            <Button Content="Рассчитать" Command="{Binding CalculateCommand}" />
+
+            <TextBlock Text="{Binding Result}" />
+        </StackPanel>
+    </Grid>
+</Page>
