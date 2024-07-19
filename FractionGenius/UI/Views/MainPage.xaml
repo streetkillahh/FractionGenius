@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:FractionGenius.Views"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="MainPage">
+      Title="FractionGenius">
 
     <Grid Background="White">
         <Grid.RowDefinitions>
@@ -15,20 +15,16 @@
         </Grid.RowDefinitions>
         <!-- Body -->
         <Grid Grid.Row="1">
-            <StackPanel HorizontalAlignment="Center" 
-            Width="200px" Margin="25px">
-                <Button Content="Сложение" 
-            Click="Button_Add_Click"
-            Style="{StaticResource OriginalButtonStyle}"/>
-                <Button Content="Вычитание" 
-            Click="Button_Subtract_Click"
-            Style="{StaticResource OriginalButtonStyle}"/>
-                <Button Content="Умножение" 
-            Click="Button_Multiply_Click"
-            Style="{StaticResource OriginalButtonStyle}"/>
-                <Button Content="Деление" 
-            Click="Button_Divide_Click"
-            Style="{StaticResource OriginalButtonStyle}"/>
+            <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Center"
+                        Width="auto" Margin="25px">
+                <Button Content="Калькулятор дробей" 
+                        Click="Button_Add_Click"
+                        Style="{StaticResource OriginalButtonStyle}"/>
+                <Button Content="Генерация дробей" 
+                        Click="Button_Subtract_Click"
+                        Style="{StaticResource OriginalButtonStyle}"/>
             </StackPanel>
         </Grid>
     </Grid>

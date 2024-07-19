@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FractionGenius.UI.Views.Calculator
+namespace FractionGenius.UI.Views.Generator
 {
     /// <summary>
-    /// Логика взаимодействия для Divide.xaml
+    /// Логика взаимодействия для FractionGenerator.xaml
     /// </summary>
-    public partial class Divide : Page
+    public partial class FractionGenerator : Page
     {
-        public Divide()
+        public FractionGenerator()
         {
             InitializeComponent();
         }

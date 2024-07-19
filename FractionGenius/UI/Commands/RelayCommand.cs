@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Input;
 
+namespace FractionGenius.UI;
+
 public class RelayCommand : ICommand
 {
     private readonly Action<object> _execute;

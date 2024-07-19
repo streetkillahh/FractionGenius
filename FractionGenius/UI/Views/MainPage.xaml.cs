@@ -1,4 +1,5 @@
 ﻿using FractionGenius.UI.Views.Calculator;
+using FractionGenius.UI.Views.Generator;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -13,19 +14,11 @@ namespace FractionGenius.Views
 
         private void Button_Add_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Summation());
+            NavigationService.Navigate(new FractionCalculator());
         }
         private void Button_Subtract_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Subtract());
-        }
-        private void Button_Multiply_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new Multiply());
-        }
-        private void Button_Divide_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new Summation());
+            NavigationService.Navigate(new FractionGenerator());
         }
     }
 }
