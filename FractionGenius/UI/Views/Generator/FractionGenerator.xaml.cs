@@ -1,28 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
+using FractionGenius.UI.ViewModels;
 
-namespace FractionGenius.UI.Views.Generator
+namespace FractionGenius.UI.Views.Generator;
+
+public partial class FractionGenerator : Page
 {
-    /// <summary>
-    /// Логика взаимодействия для FractionGenerator.xaml
-    /// </summary>
-    public partial class FractionGenerator : Page
+    public FractionGenerator()
     {
-        public FractionGenerator()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+        DataContext = new FractionGeneratorViewModel();
     }
 }
