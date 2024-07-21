@@ -1,86 +1,74 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using System.Windows.Controls;
+using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
-using FractionGenius.Domain.Entities;
+using FractionGenius.Base;
+using FractionGenius.UI.Views;
 
-namespace FractionGenius.UI.ViewModels;
-
-public class FractionGeneratorViewModel : INotifyPropertyChanged
+namespace FractionGenius.UI.ViewModels
 {
-    private readonly Random _random;
-    private Fraction _generatedFraction1;
-    private Fraction _generatedFraction2;
-    private string _generatedOperation;
-    private string _fractionEquation;
-
-    public FractionGeneratorViewModel()
+    public class FractionGeneratorViewModel : ViewModelBase
     {
-        _random = new Random();
-        GenerateFractionCommand = new RelayCommand(GenerateFraction);
-    }
+        private readonly Random _random = new Random();
 
-    public Fraction GeneratedFraction1
-    {
-        get => _generatedFraction1;
-        set
+        public ICommand GenerateFractionCommand { get; }
+
+        public FractionGeneratorViewModel()
         {
-            _generatedFraction1 = value;
-            OnPropertyChanged();
+            GenerateFractionCommand = new RelayCommand(param => GenerateAndDisplayEquation());
         }
-    }
 
-    public Fraction GeneratedFraction2
-    {
-        get => _generatedFraction2;
-        set
+        private void GenerateAndDisplayEquation()
         {
-            _generatedFraction2 = value;
-            OnPropertyChanged();
-        }
-    }
+            var paragraph = new Paragraph
+            {
+                TextAlignment = TextAlignment.Center // Выравнивание по центру
+            };
 
-    public string GeneratedOperation
-    {
-        get => _generatedOperation;
-        set
+            AddFraction(paragraph, GetRandomNumber(), GetRandomNumber());
+            paragraph.Inlines.Add(CreateOperator(" + "));
+            AddFraction(paragraph, GetRandomNumber(), GetRandomNumber());
+            paragraph.Inlines.Add(CreateOperator(" - "));
+            AddFraction(paragraph, GetRandomNumber(), GetRandomNumber());
+            paragraph.Inlines.Add(CreateOperator(" : "));
+            AddFraction(paragraph, GetRandomNumber(), GetRandomNumber());
+            paragraph.Inlines.Add(CreateOperator(" * "));
+
+            EquationDocument.Blocks.Clear();
+            EquationDocument.Blocks.Add(paragraph);
+        }
+
+        private InlineUIContainer CreateOperator(string operatorText)
         {
-            _generatedOperation = value;
-            OnPropertyChanged();
+            var textBlock = new TextBlock
+            {
+                Text = operatorText,
+                TextAlignment = TextAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            return new InlineUIContainer(textBlock);
         }
-    }
 
-    public string FractionEquation
-    {
-        get => _fractionEquation;
-        set
+        private void AddFraction(Paragraph paragraph, string numerator, string denominator)
         {
-            _fractionEquation = value;
-            OnPropertyChanged();
+            var fraction = new FractionControl
+            {
+                Numerator = numerator,
+                Denominator = denominator
+            };
+            var container = new InlineUIContainer(fraction)
+            {
+                BaselineAlignment = BaselineAlignment.Center
+            };
+            paragraph.Inlines.Add(container);
         }
-    }
 
-    public ICommand GenerateFractionCommand { get; }
+        private string GetRandomNumber()
+        {
+            return _random.Next(1, 10).ToString();
+        }
 
-    private void GenerateFraction(object parameter)
-    {
-        GeneratedFraction1 = new Fraction(_random.Next(1, 10), _random.Next(1, 10));
-        GeneratedFraction2 = new Fraction(_random.Next(1, 10), _random.Next(1, 10));
-        GeneratedOperation = GetRandomOperation();
-        FractionEquation = $"{GeneratedFraction1.Numerator}/{GeneratedFraction1.Denominator} {GeneratedOperation} {GeneratedFraction2.Numerator}/{GeneratedFraction2.Denominator}";
-    }
-
-    private string GetRandomOperation()
-    {
-        string[] operations = { "+", "-", "*", "/" };
-        int index = _random.Next(operations.Length);
-        return operations[index];
-    }
-
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        public FlowDocument EquationDocument { get; } = new FlowDocument();
     }
 }

@@ -1,13 +1,23 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Documents;
 using FractionGenius.UI.ViewModels;
 
-namespace FractionGenius.UI.Views.Generator;
-
-public partial class FractionGenerator : Page
+namespace FractionGenius.UI.Views.Generator
 {
-    public FractionGenerator()
+    public partial class FractionGenerator : Page
     {
-        InitializeComponent();
-        DataContext = new FractionGeneratorViewModel();
+        private FractionGeneratorViewModel ViewModel => DataContext as FractionGeneratorViewModel;
+
+        public FractionGenerator()
+        {
+            InitializeComponent();
+            DataContext = new FractionGeneratorViewModel(); // Убедитесь, что ViewModel установлен
+
+            // Установите документ RichTextBox из ViewModel
+            if (ViewModel != null)
+            {
+                EquationRichTextBox.Document = ViewModel.EquationDocument;
+            }
+        }
     }
 }

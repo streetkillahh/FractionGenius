@@ -1,15 +1,16 @@
 ﻿<Page x:Class="FractionGenius.UI.Views.Generator.FractionGenerator"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:viewModels="clr-namespace:FractionGenius.UI.ViewModels"
       Height="450" Width="800"
       Title="Генератор дробей">
+    <Page.DataContext>
+        <viewModels:FractionGeneratorViewModel/>
+    </Page.DataContext>
     <StackPanel VerticalAlignment="Center">
         <Button Width="200" Content="Generate Fraction" 
                 Command="{Binding GenerateFractionCommand}" 
                 Style="{StaticResource CombinedButtonStyle}"/>
-        <TextBlock HorizontalAlignment="Center" 
-                   Text="{Binding FractionEquation}" 
-                   ToolTip="Fraction Equation" 
-                   Style="{StaticResource StackPanelElementStyle}"/>
+        <RichTextBox x:Name="EquationRichTextBox" IsReadOnly="True" />
     </StackPanel>
 </Page>
