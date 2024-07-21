@@ -36,5 +36,4 @@ namespace FractionGenius.UI.Views
         public static readonly DependencyProperty DenominatorProperty =
             DependencyProperty.Register("Denominator", typeof(string), typeof(FractionControl), new PropertyMetadata(string.Empty));
     }
-
 }
