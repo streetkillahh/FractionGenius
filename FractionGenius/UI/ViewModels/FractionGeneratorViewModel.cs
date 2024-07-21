@@ -22,14 +22,45 @@ namespace FractionGenius.UI.ViewModels
         private void GenerateAndDisplayEquation()
         {
             var paragraph = new Paragraph();
-            // Пример с дробями и операторами
-            AddFractionWithOptionalWholeNumber(paragraph, GetRandomNumber(), GetRandomNumber());
-            AddOperator(paragraph, GetRandomOperator());
-            AddFractionWithOptionalWholeNumber(paragraph, GetRandomNumber(), GetRandomNumber());
-            AddOperator(paragraph, GetRandomOperator());
-            AddFractionWithOptionalWholeNumber(paragraph, GetRandomNumber(), GetRandomNumber());
-            AddOperator(paragraph, GetRandomOperator());
-            AddFractionWithOptionalWholeNumber(paragraph, GetRandomNumber(), GetRandomNumber());
+
+            // Генерация случайного количества дробей
+            int numberOfFractions = _random.Next(4, 11);
+
+            for (int i = 0; i < numberOfFractions; i++)
+            {
+                // Генерация случайного натурального числа с 50% шансом
+                if (_random.Next(2) == 0)
+                {
+                    var naturalNumberRun = new Run(GetRandomNaturalNumber() + " ")
+                    {
+                        FontSize = 24, 
+                        FontWeight = FontWeights.Bold 
+                    };
+                    paragraph.Inlines.Add(naturalNumberRun);
+                }
+
+                // Добавление дроби
+                AddFraction(paragraph, GetRandomNumber(), GetRandomNumber());
+
+                // Добавление случайного оператора, если это не последняя дробь
+                if (i < numberOfFractions - 1)
+                {
+                    var operatorRun = new Run(" " + GetRandomOperator() + " ")
+                    {
+                        FontSize = 24, 
+                        FontWeight = FontWeights.Bold 
+                    };
+                    paragraph.Inlines.Add(operatorRun);
+                }
+            }
+
+            // Замена точки на знак равенства
+            var equalsRun = new Run(" = ")
+            {
+                FontSize = 24, 
+                FontWeight = FontWeights.Bold 
+            };
+            paragraph.Inlines.Add(equalsRun);
 
             EquationDocument.Blocks.Clear();
             EquationDocument.Blocks.Add(paragraph);
@@ -37,7 +68,7 @@ namespace FractionGenius.UI.ViewModels
 
         private void AddFractionWithOptionalWholeNumber(Paragraph paragraph, string numerator, string denominator)
         {
-            // Случайным образом добавляем целое число перед дробью
+            // Случайным образом добавляет целое число перед дробью
             if (_random.NextDouble() < 0.5) // 50% шанс добавления целого числа
             {
                 var wholeNumber = GetRandomNumber();
@@ -51,6 +82,11 @@ namespace FractionGenius.UI.ViewModels
             }
 
             AddFraction(paragraph, numerator, denominator);
+        }
+
+        private string GetRandomNaturalNumber()
+        {
+            return _random.Next(1, 10).ToString();
         }
 
         private void AddFraction(Paragraph paragraph, string numerator, string denominator)
@@ -76,12 +112,13 @@ namespace FractionGenius.UI.ViewModels
 
         private string GetRandomNumber()
         {
-            return _random.Next(1, 10).ToString();
+            return _random.Next(1, 10).ToString(); // Генерирует случайные числа для дробей
         }
 
         private string GetRandomOperator()
         {
-            return _operators[_random.Next(_operators.Length)];
+            var operators = new[] { "+", "-", ":", "*" };
+            return operators[_random.Next(operators.Length)];
         }
 
         public FlowDocument EquationDocument { get; } = new FlowDocument();
