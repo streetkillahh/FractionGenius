@@ -51,34 +51,4 @@ public class Fraction
     {
         return $"Результат:{Numerator}/{Denominator}";
     }
-
-    // Добавить другие операции, такие как сложение, вычитание, умножение и деление
-    /*
-    public static Fraction operator +(Fraction a, Fraction b)
-    {
-        int numerator = a.Numerator * b.Denominator + b.Numerator * a.Denominator;
-        int denominator = a.Denominator * b.Denominator;
-        return new Fraction(numerator, denominator);
-    }
-
-    public static Fraction operator -(Fraction a, Fraction b)
-    {
-        int numerator = a.Numerator * b.Denominator - b.Numerator * a.Denominator;
-        int denominator = a.Denominator * b.Denominator;
-        return new Fraction(numerator, denominator);
-    }
-
-    public static Fraction operator *(Fraction a, Fraction b)
-    {
-        return new Fraction(a.Numerator * b.Numerator, a.Denominator * b.Denominator);
-    }
-
-    public static Fraction operator /(Fraction a, Fraction b)
-    {
-        if (b.Numerator == 0)
-        {
-            throw new ArgumentException("Нельзя делить на дробь с числителем, равным нулю.");
-        }
-        return new Fraction(a.Numerator * b.Denominator, a.Denominator * b.Numerator);
-    }*/
 }

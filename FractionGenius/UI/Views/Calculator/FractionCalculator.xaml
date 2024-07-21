@@ -2,21 +2,37 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:local="clr-namespace:FractionGenius.UI.Views.Calculator"
-      Title="FractionCalculator">
+      Height="450" Width="800"
+      Title="Калькулятор дробей">
+    <Page.Resources>
+        <!-- Define a style for all elements within the StackPanel -->
+        <Style TargetType="FrameworkElement" x:Key="StackPanelElementStyle">
+            <Setter Property="Margin" Value="10,5,10,5"/>
+        </Style>
+    </Page.Resources>
     <Grid>
-        <StackPanel>
-            <TextBox Text="{Binding Numerator1}" ToolTip="Числитель 1" />
-            <TextBox Text="{Binding Denominator1}" ToolTip="Знаменатель 1" />
-            <TextBox Text="{Binding Numerator2}" ToolTip="Числитель 2" />
-            <TextBox Text="{Binding Denominator2}" ToolTip="Знаменатель 2" />
-
+        <StackPanel Width="200" VerticalAlignment="Center" Style="{StaticResource StackPanelElementStyle}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBox Text="{Binding Numerator1}" ToolTip="Числитель 1" Style="{StaticResource StackPanelElementStyle}" />
+                    <TextBox Text="{Binding Denominator1}" ToolTip="Знаменатель 1" Style="{StaticResource StackPanelElementStyle}" />
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBox Text="{Binding Numerator2}" ToolTip="Числитель 2" Style="{StaticResource StackPanelElementStyle}" />
+                    <TextBox Text="{Binding Denominator2}" ToolTip="Знаменатель 2" Style="{StaticResource StackPanelElementStyle}" />
+                </StackPanel>
+            </Grid>
             <ComboBox ItemsSource="{Binding Operations}" 
                       SelectedItem="{Binding SelectedOperation}" 
-                      Width="200" />
+                      Width="200" Style="{StaticResource StackPanelElementStyle}" />
 
-            <Button Content="Рассчитать" Command="{Binding CalculateCommand}" />
+            <Button Content="Рассчитать" Command="{Binding CalculateCommand}" Style="{StaticResource StackPanelElementStyle}" />
 
-            <TextBlock Text="{Binding Result}" />
+            <TextBlock Text="{Binding Result}" Style="{StaticResource StackPanelElementStyle}" />
         </StackPanel>
     </Grid>
 </Page>
