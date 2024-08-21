@@ -7,6 +7,7 @@
         <viewModels:FractionGeneratorViewModel/>
     </Page.DataContext>
     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+        
         <Button Width="200" Content="Generate Fraction" 
                 Command="{Binding GenerateFractionCommand}" 
                 Style="{StaticResource CombinedButtonStyle}"/>
