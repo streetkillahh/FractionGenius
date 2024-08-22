@@ -23,7 +23,7 @@
                 <TextBlock Text="Количество дробей:" Margin="5"/>
                 <Slider Minimum="1" Maximum="10" Value="{Binding FractionCount}" Margin="5"/>
                 <TextBlock Text="Операции:" Margin="5"/>
-                <StackPanel Orientation="Horizontal" Margin="5">
+                <StackPanel Orientation="Vertical" Margin="5">
                     <CheckBox Content="+" IsChecked="{Binding IncludeAddition}"/>
                     <CheckBox Content="-" IsChecked="{Binding IncludeSubtraction}"/>
                     <CheckBox Content="*" IsChecked="{Binding IncludeMultiplication}"/>
