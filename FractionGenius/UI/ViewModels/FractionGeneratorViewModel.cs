@@ -22,43 +22,62 @@ namespace FractionGenius.UI.ViewModels
         private void GenerateAndDisplayEquation()
         {
             var paragraph = new Paragraph();
-
-            // Генерация случайного количества дробей
             int numberOfFractions = _random.Next(4, 11);
+
+            bool openBracket = false;
+            int bracketStartIndex = 0;
 
             for (int i = 0; i < numberOfFractions; i++)
             {
-                // Генерация случайного натурального числа с 50% шансом
-                if (_random.Next(2) == 0)
+                // Возможность открытия скобки
+                if (!openBracket && _random.Next(0, 3) == 0 && i < numberOfFractions - 2)
                 {
-                    var naturalNumberRun = new Run(GetRandomNaturalNumber() + " ")
+                    paragraph.Inlines.Add(new Run("(")
                     {
-                        FontSize = 24, 
-                        FontWeight = FontWeights.Bold 
-                    };
-                    paragraph.Inlines.Add(naturalNumberRun);
+                        FontSize = 24,
+                        FontWeight = FontWeights.Bold
+                    });
+                    openBracket = true;
+                    bracketStartIndex = i;
                 }
 
-                // Добавление дроби
-                AddFraction(paragraph, GetRandomNumber(), GetRandomNumber());
+                // Генерация дроби с опциональным целым числом
+                AddFractionWithOptionalWholeNumber(paragraph, GetRandomNumber(), GetRandomNumber());
 
-                // Добавление случайного оператора, если это не последняя дробь
+                // Возможность закрытия скобки
+                if (openBracket && i > bracketStartIndex + 1 && (i == numberOfFractions - 1 || _random.Next(0, 3) == 0))
+                {
+                    paragraph.Inlines.Add(new Run(")")
+                    {
+                        FontSize = 24,
+                        FontWeight = FontWeights.Bold
+                    });
+                    openBracket = false;
+
+                    // Если скобки охватывают всё выражение, удаляем их
+                    if (bracketStartIndex == 0 && i == numberOfFractions - 1)
+                    {
+                        paragraph.Inlines.Remove(paragraph.Inlines.FirstInline);
+                        paragraph.Inlines.Remove(paragraph.Inlines.LastInline);
+                    }
+                }
+
+                // Добавление оператора
                 if (i < numberOfFractions - 1)
                 {
-                    var operatorRun = new Run(" " + GetRandomOperator() + " ")
+                    paragraph.Inlines.Add(new Run(" " + GetRandomOperator() + " ")
                     {
-                        FontSize = 24, 
-                        FontWeight = FontWeights.Bold 
-                    };
-                    paragraph.Inlines.Add(operatorRun);
+                        FontSize = 24,
+                        FontWeight = FontWeights.Bold
+                    });
                 }
             }
 
-            // Замена точки на знак равенства
+            // Добавление знака равно
             var equalsRun = new Run(" = ")
             {
-                FontSize = 24, 
-                FontWeight = FontWeights.Bold 
+                FontSize = 24,
+                FontWeight = FontWeights.Bold
             };
             paragraph.Inlines.Add(equalsRun);
 
@@ -68,26 +87,54 @@ namespace FractionGenius.UI.ViewModels
 
         private void AddFractionWithOptionalWholeNumber(Paragraph paragraph, string numerator, string denominator)
         {
-            // Случайным образом добавляет целое число перед дробью
-            if (_random.NextDouble() < 0.5) // 50% шанс добавления целого числа
+            if (_random.NextDouble() < 0.5) // 50% шанс добавления натурального числа перед дробью
             {
-                var wholeNumber = GetRandomNumber();
-                var wholeNumberRun = new Run(wholeNumber + " ")
+                var naturalNumber = GetRandomNaturalNumber();
+                var naturalNumberRun = new Run(naturalNumber)
+                {
+                    FontSize = 24,
+                    FontWeight = FontWeights.Bold,
+                    BaselineAlignment = BaselineAlignment.Center
+                };
+                paragraph.Inlines.Add(naturalNumberRun);
+
+                // Добавляем дробь с пробелом после натурального числа
+                AddFraction(paragraph, numerator, denominator);
+            }
+            else // Иначе добавляем целое число с операцией
+            {
+                var wholeNumber = GetRandomWholeNumber();
+                var wholeNumberRun = new Run(wholeNumber)
                 {
                     FontSize = 24,
                     FontWeight = FontWeights.Bold,
                     BaselineAlignment = BaselineAlignment.Center
                 };
                 paragraph.Inlines.Add(wholeNumberRun);
-            }
 
-            AddFraction(paragraph, numerator, denominator);
+                // Добавляем случайный оператор с пробелами до и после
+                AddOperator(paragraph,GetRandomOperator());
+
+                // Добавляем дробь с пробелами
+                AddFraction(paragraph, numerator, denominator);
+            }
         }
 
         private string GetRandomNaturalNumber()
         {
-            return _random.Next(1, 10).ToString();
+            return _random.Next(1, 10).ToString(); // Генерация случайного натурального числа
         }
+
+        private string GetRandomWholeNumber()
+        {
+            // Генерация случайного целого числа (может быть отрицательным или положительным)
+            int number = _random.Next(-9, 10);
+            return number == 0 ? "1" : number.ToString(); // Исключаем ноль
+        }
+
+
+
+
 
         private void AddFraction(Paragraph paragraph, string numerator, string denominator)
         {
@@ -101,7 +148,7 @@ namespace FractionGenius.UI.ViewModels
 
         private void AddOperator(Paragraph paragraph, string operatorText)
         {
-            var operatorRun = new Run(operatorText)
+            var operatorRun = new Run(" " + operatorText + " ")
             {
                 FontSize = 24,
                 FontWeight = FontWeights.Bold,

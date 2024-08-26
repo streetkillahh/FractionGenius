@@ -5,10 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FractionGenius"
         mc:Ignorable="d"
-        Title="FractionGenius" Height="500" Width="800">
+        Title="FractionGenius" Height="800" Width="1200">
     <Grid>
-        <Frame x:Name="mainFrame" NavigationUIVisibility="Hidden">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <!-- Header Section -->
+        <StackPanel Orientation="Horizontal" Background="LightGray" Grid.Row="0" Height="60">
+            <Button Style="{StaticResource CombinedButtonStyle}" 
+                    Content="Главная" Click="GoHome_Click"
+                    Height="40" Width="100"/>
+            <Button Style="{StaticResource CombinedButtonStyle}"
+                    Content="Назад" Click="GoBack_Click"
+                    Height="40" Width="100"/>
             
-        </Frame>
+        </StackPanel>
+
+        <!-- Content Section -->
+        <Frame Name="MainFrame" NavigationUIVisibility="Hidden" Grid.Row="1"/>
     </Grid>
 </Window>
